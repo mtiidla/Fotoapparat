@@ -57,7 +57,7 @@ public class OrientationSensorTest {
         });
 
         // When
-        testee.onRotationChanged();
+        testee.onRotationChanged(screenOrientationProvider.getScreenRotation());
 
         // Then
         assertEquals(90, atomicInteger.get());
