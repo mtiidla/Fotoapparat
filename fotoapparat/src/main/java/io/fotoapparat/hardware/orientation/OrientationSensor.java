@@ -38,9 +38,9 @@ public class OrientationSensor implements RotationListener.Listener {
     }
 
     @Override
-    public void onRotationChanged(int orientationDegrees) {
+    public void onRotationChanged() {
         if (listener != null) {
-            int rotation = OrientationUtils.toClosestRightAngle(orientationDegrees);
+            int rotation = screenOrientationProvider.getScreenRotation();
             if (rotation != lastKnownRotation) {
                 listener.onOrientationChanged(rotation);
                 lastKnownRotation = rotation;

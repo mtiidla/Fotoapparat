@@ -18,7 +18,7 @@ public class RotationListener extends OrientationEventListener {
     @Override
     public void onOrientationChanged(int orientation) {
         if (listener != null && canDetectOrientation()) {
-            listener.onRotationChanged(orientation);
+            listener.onRotationChanged();
         }
     }
 
@@ -38,8 +38,7 @@ public class RotationListener extends OrientationEventListener {
 
         /**
          * Called when the rotation of the device has changed.
-         * @param orientationDegrees
          */
-        void onRotationChanged(int orientationDegrees);
+        void onRotationChanged();
     }
 }
