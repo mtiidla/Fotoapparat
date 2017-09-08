@@ -24,13 +24,15 @@ public class CapabilitiesFactory {
     /**
      * @return {@link Capabilities} from given camera parameters.
      */
-    public Capabilities fromParameters(Camera.Parameters parameters) {
+    public Capabilities fromParameters(Camera.Parameters parameters,
+            Camera.CameraInfo info) {
         return new Capabilities(
                 extractPictureSizes(parameters),
                 extractPreviewSizes(parameters),
                 extractFocusModes(parameters),
                 extractFlashModes(parameters),
-                parameters.isZoomSupported()
+                parameters.isZoomSupported(),
+                info.orientation
         );
     }
 
@@ -77,7 +79,6 @@ public class CapabilitiesFactory {
 
     private Set<FocusMode> extractFocusModes(Camera.Parameters parameters) {
         HashSet<FocusMode> result = new HashSet<>();
-
         for (String focusMode : parameters.getSupportedFocusModes()) {
             result.add(
                     FocusCapability.toFocusMode(focusMode)

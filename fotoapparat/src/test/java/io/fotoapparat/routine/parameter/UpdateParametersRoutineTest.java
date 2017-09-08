@@ -1,5 +1,12 @@
 package io.fotoapparat.routine.parameter;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
+import static io.fotoapparat.parameter.selector.FlashSelectors.torch;
+import static io.fotoapparat.parameter.selector.FocusModeSelectors.autoFocus;
+import static io.fotoapparat.test.TestUtils.asSet;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,12 +23,6 @@ import io.fotoapparat.parameter.FocusMode;
 import io.fotoapparat.parameter.Parameters;
 import io.fotoapparat.parameter.Size;
 import io.fotoapparat.parameter.update.UpdateRequest;
-
-import static io.fotoapparat.parameter.selector.FlashSelectors.torch;
-import static io.fotoapparat.parameter.selector.FocusModeSelectors.autoFocus;
-import static io.fotoapparat.test.TestUtils.asSet;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateParametersRoutineTest {
@@ -40,7 +41,8 @@ public class UpdateParametersRoutineTest {
                         Collections.<Size>emptySet(),
                         asSet(FocusMode.AUTO),
                         asSet(Flash.TORCH),
-                        false
+                        false,
+                        0
                 ));
     }
 

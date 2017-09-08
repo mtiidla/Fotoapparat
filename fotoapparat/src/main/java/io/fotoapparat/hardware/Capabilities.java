@@ -23,17 +23,20 @@ public class Capabilities {
     @NonNull
     private final Set<Flash> flashModes;
     private final boolean zoomSupported;
+    private final int orientation;
 
     public Capabilities(@NonNull Set<Size> photoSizes,
                         @NonNull Set<Size> previewSizes,
                         @NonNull Set<FocusMode> focusModes,
                         @NonNull Set<Flash> flashModes,
-                        boolean zoomSupported) {
+                        boolean zoomSupported,
+                        int orientation) {
         this.photoSizes = photoSizes;
         this.previewSizes = previewSizes;
         this.focusModes = focusModes;
         this.flashModes = flashModes;
         this.zoomSupported = zoomSupported;
+        this.orientation = orientation;
     }
 
     /**
@@ -45,7 +48,8 @@ public class Capabilities {
                 Collections.<Size>emptySet(),
                 Collections.<FocusMode>emptySet(),
                 Collections.<Flash>emptySet(),
-                false
+                false,
+                0
         );
     }
 
@@ -84,6 +88,13 @@ public class Capabilities {
         return zoomSupported;
     }
 
+    /**
+     * @return orientation of the camera sensor, read more at {@link android.hardware.Camera.CameraInfo#orientation}
+     */
+    public int getSensorOrientation() {
+        return orientation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,6 +103,7 @@ public class Capabilities {
         Capabilities that = (Capabilities) o;
 
         return zoomSupported == that.zoomSupported
+                && orientation == that.orientation
                 && photoSizes.equals(that.photoSizes)
                 && previewSizes.equals(that.previewSizes)
                 && focusModes.equals(that.focusModes)
@@ -106,6 +118,7 @@ public class Capabilities {
         result = 31 * result + focusModes.hashCode();
         result = 31 * result + flashModes.hashCode();
         result = 31 * result + (zoomSupported ? 1 : 0);
+        result = 31 * result + orientation;
         return result;
     }
 
@@ -117,6 +130,7 @@ public class Capabilities {
                 ", focusModes=" + focusModes +
                 ", flashModes=" + flashModes +
                 ", zoomSupported=" + zoomSupported +
+                ", orientation=" + orientation +
                 '}';
     }
 

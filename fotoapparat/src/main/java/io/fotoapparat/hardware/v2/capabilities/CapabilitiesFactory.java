@@ -1,5 +1,7 @@
 package io.fotoapparat.hardware.v2.capabilities;
 
+import static io.fotoapparat.hardware.v2.parameters.converters.FlashConverter.exposureModeToFlash;
+
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -14,8 +16,6 @@ import io.fotoapparat.hardware.v2.parameters.converters.FocusConverter;
 import io.fotoapparat.parameter.Flash;
 import io.fotoapparat.parameter.FocusMode;
 import io.fotoapparat.parameter.Size;
-
-import static io.fotoapparat.hardware.v2.parameters.converters.FlashConverter.exposureModeToFlash;
 
 /**
  * Creates the {@link Capabilities} of a {@link io.fotoapparat.hardware.v2.Camera2}.
@@ -36,7 +36,8 @@ public class CapabilitiesFactory implements CapabilitiesOperator {
                 availablePreviewSizes(),
                 availableFocusModes(),
                 availableFlashModes(),
-                false
+                false,
+                orientation()
         );
     }
 
@@ -92,6 +93,10 @@ public class CapabilitiesFactory implements CapabilitiesOperator {
         }
 
         return flashes;
+    }
+
+    private int orientation() {
+        return characteristics().getSensorOrientation();
     }
 
     private Characteristics characteristics() {

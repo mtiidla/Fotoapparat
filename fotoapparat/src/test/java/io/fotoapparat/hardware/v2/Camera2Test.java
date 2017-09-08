@@ -1,5 +1,16 @@
 package io.fotoapparat.hardware.v2;
 
+import static junit.framework.Assert.assertEquals;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
+import static java.util.Collections.singleton;
+import static java.util.Collections.singletonList;
+
+import static io.fotoapparat.lens.FocusResult.successNoMeasurement;
+
 import android.view.TextureView;
 
 import org.junit.Test;
@@ -34,14 +45,6 @@ import io.fotoapparat.parameter.RendererParameters;
 import io.fotoapparat.parameter.Size;
 import io.fotoapparat.photo.Photo;
 import io.fotoapparat.preview.PreviewStream;
-
-import static io.fotoapparat.lens.FocusResult.successNoMeasurement;
-import static java.util.Collections.singleton;
-import static java.util.Collections.singletonList;
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("NewApi")
 @RunWith(MockitoJUnitRunner.class)
@@ -157,7 +160,8 @@ public class Camera2Test {
                 Collections.<Size>emptySet(),
                 singleton(FocusMode.MACRO),
                 Collections.<Flash>emptySet(),
-                false
+                false,
+                0
         );
         given(capabilitiesOperator.getCapabilities())
                 .willReturn(capabilities);

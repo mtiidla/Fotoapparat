@@ -1,5 +1,10 @@
 package io.fotoapparat.routine.zoom;
 
+import static org.mockito.ArgumentMatchers.anyFloat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,11 +19,6 @@ import io.fotoapparat.parameter.Flash;
 import io.fotoapparat.parameter.FocusMode;
 import io.fotoapparat.parameter.Size;
 import io.fotoapparat.routine.zoom.UpdateZoomLevelRoutine.LevelOutOfRangeException;
-
-import static org.mockito.ArgumentMatchers.anyFloat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateZoomLevelRoutineTest {
@@ -88,7 +88,8 @@ public class UpdateZoomLevelRoutineTest {
                         Collections.<Size>emptySet(),
                         Collections.<FocusMode>emptySet(),
                         Collections.<Flash>emptySet(),
-                        supported
+                        supported,
+                        0
                 ));
     }
 

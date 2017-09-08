@@ -1,5 +1,15 @@
 package io.fotoapparat.parameter.provider;
 
+import static junit.framework.Assert.assertEquals;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
+import static io.fotoapparat.parameter.selector.FlashSelectors.torch;
+import static io.fotoapparat.parameter.selector.FocusModeSelectors.autoFocus;
+import static io.fotoapparat.test.TestUtils.asSet;
+import static io.fotoapparat.util.TestSelectors.select;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,14 +24,6 @@ import io.fotoapparat.parameter.FocusMode;
 import io.fotoapparat.parameter.Parameters;
 import io.fotoapparat.parameter.Size;
 import io.fotoapparat.parameter.selector.SizeSelectors;
-
-import static io.fotoapparat.parameter.selector.FlashSelectors.torch;
-import static io.fotoapparat.parameter.selector.FocusModeSelectors.autoFocus;
-import static io.fotoapparat.test.TestUtils.asSet;
-import static io.fotoapparat.util.TestSelectors.select;
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InitialParametersProviderTest {
@@ -86,7 +88,8 @@ public class InitialParametersProviderTest {
                         ALL_PREVIEW_SIZES,
                         asSet(FocusMode.AUTO),
                         asSet(Flash.TORCH),
-                        true
+                        true,
+                        0
                 ));
 
         InitialParametersProvider testee = new InitialParametersProvider(

@@ -1,5 +1,12 @@
 package io.fotoapparat.task;
 
+import static junit.framework.Assert.assertEquals;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.inOrder;
+
+import static io.fotoapparat.test.TestUtils.resultOf;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -16,11 +23,6 @@ import io.fotoapparat.parameter.FocusMode;
 import io.fotoapparat.parameter.Size;
 import io.fotoapparat.parameter.provider.GetCapabilitiesTask;
 
-import static io.fotoapparat.test.TestUtils.resultOf;
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.inOrder;
-
 @RunWith(MockitoJUnitRunner.class)
 public class GetCapabilitiesTaskTest {
 
@@ -29,7 +31,8 @@ public class GetCapabilitiesTaskTest {
             Collections.singleton(new Size(1400, 1080)),
             Collections.singleton(FocusMode.CONTINUOUS_FOCUS),
             Collections.singleton(Flash.OFF),
-            false
+            false,
+            0
     );
 
     @Mock

@@ -1,5 +1,15 @@
 package io.fotoapparat.hardware.v1;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
+import static org.mockito.BDDMockito.given;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singleton;
+
+import static io.fotoapparat.test.TestUtils.asSet;
+
 import android.hardware.Camera;
 import android.support.annotation.NonNull;
 
@@ -17,13 +27,6 @@ import io.fotoapparat.parameter.Flash;
 import io.fotoapparat.parameter.FocusMode;
 import io.fotoapparat.parameter.Size;
 
-import static io.fotoapparat.test.TestUtils.asSet;
-import static java.util.Arrays.asList;
-import static java.util.Collections.singleton;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.BDDMockito.given;
-
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("deprecation")
 public class CapabilitiesFactoryTest {
@@ -32,6 +35,8 @@ public class CapabilitiesFactoryTest {
     Camera camera;
     @Mock
     Camera.Parameters parameters;
+
+    Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
 
     CapabilitiesFactory testee;
 
@@ -47,6 +52,7 @@ public class CapabilitiesFactoryTest {
                 .willReturn(Collections.<Camera.Size>emptyList());
         given(parameters.isZoomSupported())
                 .willReturn(false);
+        cameraInfo.orientation = 0;
 
         testee = new CapabilitiesFactory();
     }
@@ -65,7 +71,7 @@ public class CapabilitiesFactoryTest {
                 ));
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertEquals(
@@ -87,7 +93,7 @@ public class CapabilitiesFactoryTest {
                 .willReturn(Collections.<String>emptyList());
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertEquals(
@@ -109,7 +115,7 @@ public class CapabilitiesFactoryTest {
                 ));
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertEquals(
@@ -131,7 +137,7 @@ public class CapabilitiesFactoryTest {
                 .willReturn(null);    // because why the fuck not, right Google?
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertEquals(
@@ -150,7 +156,7 @@ public class CapabilitiesFactoryTest {
                 ));
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertEquals(
@@ -172,7 +178,7 @@ public class CapabilitiesFactoryTest {
                 ));
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertEquals(
@@ -191,10 +197,22 @@ public class CapabilitiesFactoryTest {
                 .willReturn(true);
 
         // When
-        Capabilities capabilities = testee.fromParameters(parameters);
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
 
         // Then
         assertTrue(capabilities.isZoomSupported());
+    }
+
+    @Test
+    public void sensorOrientation() throws Exception {
+        // Given
+        cameraInfo.orientation = 90;
+
+        // When
+        Capabilities capabilities = testee.fromParameters(parameters, cameraInfo);
+
+        // Then
+        assertEquals(90, capabilities.getSensorOrientation());
     }
 
     @NonNull
